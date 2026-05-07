@@ -12,6 +12,15 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
+function heroIsNativeHref(href: string) {
+  return (
+    href.startsWith("http://") ||
+    href.startsWith("https://") ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:")
+  );
+}
+
 type HeroProps = {
   eyebrow?: string;
   title: string;
@@ -27,7 +36,7 @@ export function Hero({
   eyebrow,
   title,
   subtitle,
-  primaryCta = { label: "Book Free Consultation", href: "/contact" },
+  primaryCta = { label: "Book Free Consultation", href: "/contact#contact-form" },
   secondaryCta = { label: "Explore Services", href: "/services" },
   align = "center",
   imageSrc,
@@ -51,6 +60,9 @@ export function Hero({
             priority
             className="object-cover object-center"
             sizes="100vw"
+            unoptimized={
+              imageSrc!.endsWith(".svg") || imageSrc!.startsWith("data:")
+            }
           />
           {/* Teal wash: strong at top, opens to pale aqua/white at bottom for premium spa-style hero */}
           <div
@@ -133,29 +145,61 @@ export function Hero({
           }`}
         >
           <motion.span whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full min-w-0 sm:w-auto">
-            <Link
-              href={primaryCta.href}
-              className={`inline-flex w-full min-w-0 items-center justify-center px-6 py-3.5 text-sm font-semibold shadow-lg transition hover:shadow-xl sm:w-auto sm:px-8 sm:text-base ${
-                immersive
-                  ? "rounded-full bg-white/95 text-[#063d42] hover:bg-white"
-                  : "rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-navy shadow-black/25"
-              }`}
-            >
-              {primaryCta.label}
-            </Link>
+            {heroIsNativeHref(primaryCta.href) ? (
+              <a
+                href={primaryCta.href}
+                {...(primaryCta.href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+                className={`inline-flex w-full min-w-0 items-center justify-center px-6 py-3.5 text-sm font-semibold shadow-lg transition hover:shadow-xl sm:w-auto sm:px-8 sm:text-base ${
+                  immersive
+                    ? "rounded-full bg-white/95 text-[#063d42] hover:bg-white"
+                    : "rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-navy shadow-black/25"
+                }`}
+              >
+                {primaryCta.label}
+              </a>
+            ) : (
+              <Link
+                href={primaryCta.href}
+                className={`inline-flex w-full min-w-0 items-center justify-center px-6 py-3.5 text-sm font-semibold shadow-lg transition hover:shadow-xl sm:w-auto sm:px-8 sm:text-base ${
+                  immersive
+                    ? "rounded-full bg-white/95 text-[#063d42] hover:bg-white"
+                    : "rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-navy shadow-black/25"
+                }`}
+              >
+                {primaryCta.label}
+              </Link>
+            )}
           </motion.span>
           {showSecondary && secondaryCta && (
             <motion.span whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full min-w-0 sm:w-auto">
-              <Link
-                href={secondaryCta.href}
-                className={`inline-flex w-full min-w-0 items-center justify-center px-6 py-3.5 text-sm font-semibold text-white transition sm:w-auto sm:px-8 sm:text-base ${
-                  immersive
-                    ? "rounded-full border border-white/45 bg-white/10 backdrop-blur-sm hover:bg-white/20"
-                    : "rounded-xl border-2 border-brand-gold/50 bg-white/5 backdrop-blur-sm hover:border-brand-gold-light hover:bg-brand-gold/10"
-                }`}
-              >
-                {secondaryCta.label}
-              </Link>
+              {heroIsNativeHref(secondaryCta.href) ? (
+                <a
+                  href={secondaryCta.href}
+                  {...(secondaryCta.href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className={`inline-flex w-full min-w-0 items-center justify-center px-6 py-3.5 text-sm font-semibold text-white transition sm:w-auto sm:px-8 sm:text-base ${
+                    immersive
+                      ? "rounded-full border border-white/45 bg-white/10 backdrop-blur-sm hover:bg-white/20"
+                      : "rounded-xl border-2 border-brand-gold/50 bg-white/5 backdrop-blur-sm hover:border-brand-gold-light hover:bg-brand-gold/10"
+                  }`}
+                >
+                  {secondaryCta.label}
+                </a>
+              ) : (
+                <Link
+                  href={secondaryCta.href}
+                  className={`inline-flex w-full min-w-0 items-center justify-center px-6 py-3.5 text-sm font-semibold text-white transition sm:w-auto sm:px-8 sm:text-base ${
+                    immersive
+                      ? "rounded-full border border-white/45 bg-white/10 backdrop-blur-sm hover:bg-white/20"
+                      : "rounded-xl border-2 border-brand-gold/50 bg-white/5 backdrop-blur-sm hover:border-brand-gold-light hover:bg-brand-gold/10"
+                  }`}
+                >
+                  {secondaryCta.label}
+                </Link>
+              )}
             </motion.span>
           )}
         </motion.div>
@@ -166,7 +210,7 @@ export function Hero({
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.35, duration: 0.4 }}
-          className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(0.75rem,env(safe-area-inset-right))] z-20 sm:bottom-10 sm:right-8"
+          className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] left-[max(0.75rem,env(safe-area-inset-left))] z-20 sm:bottom-10 sm:left-8"
         >
           <Link
             href={primaryCta.href}

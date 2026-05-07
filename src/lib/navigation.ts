@@ -1,12 +1,17 @@
+const whatsappPrefill =
+  "Hello Lexicon Migration, I would like to get consultation regarding visa and immigration services.";
+
 export const siteConfig = {
   name: "Lexicon Migration",
   tagline: "Your Future Starts Here",
   footerTagline: "Immigration & mobility consultancy — Australia & global",
-  phone: "+61 000 000 000", // TODO: Replace with client phone
-  email: "hello@lexiconmigration.com", // TODO: Replace with client email
-  emailSecondary: "support@lexiconmigration.com", // TODO: Optional second inbox
-  whatsapp: "https://wa.me/61000000000", // TODO: Replace with client WhatsApp link
-  address: "Suite 00, 000 Example Street, Sydney NSW 2000, Australia", // TODO: Replace
+  /** Display & tel: (Pakistan mobile — no spaces for tel: compatibility) */
+  phone: "03009261437",
+  email: "Lexiconmigration@gmail.com",
+  /** WhatsApp deep link with prefilled message (digits only after wa.me/) */
+  whatsapp: `https://wa.me/923009261437?text=${encodeURIComponent(whatsappPrefill)}`,
+  address:
+    "F-64, First Floor, RJ Mall, Main Rashid Minhas Road, Karachi",
   social: {
     linkedin: "#", // TODO
     facebook: "#", // TODO
@@ -22,27 +27,26 @@ export const siteConfig = {
 
 export type NavItem = { label: string; href: string };
 
-/** Top bar: Home, About, Services (dropdown), Contact */
+/** Header & footer primary navigation (same four items). */
 export const primaryNav: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
-/** Items inside the Services dropdown (first row = overview). */
-export const serviceDropdownItems: NavItem[] = [
-  { label: "All services", href: "/services" },
-  { label: "Immigration & Citizenship", href: "/services/immigration-citizenship" },
-  { label: "Work Permits", href: "/services/work-permits" },
-  { label: "Visit Visa", href: "/services/visit-visa" },
-  { label: "Study Visa", href: "/services/study-visa" },
-  { label: "Travel", href: "/services/travel" },
-];
-
-/** Footer middle row — uppercase style in UI. */
-export const footerNavLinks: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Contact", href: "/contact" },
 ];
+
+/** Footer “Services” column — optional links under main nav (not duplicated in header). */
+export const footerServiceLinks: NavItem[] = [
+  { label: "All services", href: "/services" },
+  { label: "Immigration & Citizenship", href: "/services/immigration-citizenship" },
+  { label: "Work Permits", href: "/services/work-permits" },
+  { label: "Visit Visa", href: "/services/visit-visa" },
+  { label: "Study Visa", href: "/services/study-visa" },
+  { label: "Travel Services", href: "/services/travel" },
+];
+
+/** @deprecated Use footerServiceLinks — kept alias for any stale imports */
+export const serviceDropdownItems = footerServiceLinks;
+
+/** Alias — footer strip uses same four links as header */
+export const footerNavLinks = primaryNav;

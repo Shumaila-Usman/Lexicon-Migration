@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Placeholder: global migration theme">
+  <defs>
+    <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#063d42"/>
+      <stop offset="45%" stop-color="#0a5f66"/>
+      <stop offset="100%" stop-color="#2d5016"/>
+    </linearGradient>
+    <linearGradient id="hg2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#hg)"/>
+  <rect width="1600" height="900" fill="url(#hg2)"/>
+  <circle cx="1320" cy="200" r="280" fill="#ffffff" opacity="0.06"/>
+  <circle cx="220" cy="720" r="340" fill="#d4af37" opacity="0.08"/>
+  <path fill="#ffffff" opacity="0.12" d="M800 180l520 280v260L800 440 280 720V460z"/>
+  <text x="800" y="760" text-anchor="middle" fill="#e8f4f3" opacity="0.35" font-family="system-ui,sans-serif" font-size="28">Placeholder  Global mobility</text>
+</svg>

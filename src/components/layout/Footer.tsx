@@ -9,11 +9,12 @@ import {
   MapPin,
   Phone,
   Clock,
+  MessageCircle,
 } from "lucide-react";
 import {
   footerNavLinks,
+  footerServiceLinks,
   siteConfig,
-  serviceDropdownItems,
 } from "@/lib/navigation";
 
 const inquiryRows = [
@@ -31,7 +32,7 @@ export function Footer() {
 
       <div className="relative mx-auto min-w-0 max-w-7xl px-[max(1rem,env(safe-area-inset-left))] pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-14 pr-[max(1rem,env(safe-area-inset-right))] sm:px-6 lg:px-8">
         {/* Top: three cards (screenshot-style) */}
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           <FooterCard delay={0} title="Contact us">
             <ContactRow
               icon={<Phone className="h-4 w-4" />}
@@ -39,14 +40,15 @@ export function Footer() {
               text={siteConfig.phone}
             />
             <ContactRow
-              icon={<Mail className="h-4 w-4" />}
-              href={`mailto:${siteConfig.email}`}
-              text={siteConfig.email}
+              icon={<MessageCircle className="h-4 w-4" />}
+              href={siteConfig.whatsapp}
+              text="Chat on WhatsApp"
+              external
             />
             <ContactRow
               icon={<Mail className="h-4 w-4" />}
-              href={`mailto:${siteConfig.emailSecondary}`}
-              text={siteConfig.emailSecondary}
+              href={`mailto:${siteConfig.email}`}
+              text={siteConfig.email}
             />
           </FooterCard>
 
@@ -79,7 +81,7 @@ export function Footer() {
             </div>
           </FooterCard>
 
-          <FooterCard delay={0.16} title="Global — inquiries">
+          <FooterCard delay={0.14} title="Global — inquiries">
             <div className="flex gap-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-brand-gold/30 bg-black/30 text-brand-gold">
                 <Globe2 className="h-4 w-4" aria-hidden />
@@ -102,6 +104,21 @@ export function Footer() {
                 ))}
               </tbody>
             </table>
+          </FooterCard>
+
+          <FooterCard delay={0.2} title="Services">
+            <ul className="flex flex-col gap-2">
+              {footerServiceLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm leading-snug text-white/82 transition hover:text-brand-gold-light"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </FooterCard>
         </div>
 
@@ -140,23 +157,6 @@ export function Footer() {
               <Link
                 href={item.href}
                 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/70 transition hover:text-brand-gold-light"
-              >
-                {item.label}
-              </Link>
-            </motion.span>
-          ))}
-          {serviceDropdownItems.slice(1).map((item, i) => (
-            <motion.span
-              key={item.href}
-              initial={{ opacity: 0, y: 6 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: (footerNavLinks.length + i) * 0.03 }}
-              className="inline max-w-full"
-            >
-              <Link
-                href={item.href}
-                className="break-words text-[10px] font-bold uppercase tracking-[0.14em] text-white/55 transition hover:text-brand-gold-light sm:text-[11px] sm:tracking-[0.18em]"
               >
                 {item.label}
               </Link>
@@ -228,14 +228,19 @@ function ContactRow({
   icon,
   href,
   text,
+  external,
 }: {
   icon: React.ReactNode;
   href: string;
   text: string;
+  external?: boolean;
 }) {
   return (
     <a
       href={href}
+      {...(external
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
       className="flex min-w-0 items-center gap-3 rounded-lg border border-white/5 bg-black/25 py-2 pl-2 pr-3 transition hover:border-brand-gold/30 hover:bg-brand-gold/5"
     >
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-brand-gold/25 bg-black/40 text-brand-gold">

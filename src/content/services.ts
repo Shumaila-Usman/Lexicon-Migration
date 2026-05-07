@@ -31,7 +31,7 @@ export const services: ServiceDefinition[] = [
     slug: "immigration-citizenship",
     shortTitle: "Immigration & Citizenship",
     navLabel: "Immigration & Citizenship",
-    metaTitle: "Immigration & Citizenship Services | Lexicon Migration",
+    metaTitle: "Immigration & Citizenship Services",
     metaDescription:
       "Guidance on permanent residency, skilled and family migration, citizenship pathways, eligibility assessment, and application support with Lexicon Migration.",
     heroTitle: "Immigration & citizenship pathways",
@@ -91,7 +91,7 @@ export const services: ServiceDefinition[] = [
     slug: "work-permits",
     shortTitle: "Work Permits",
     navLabel: "Work Permits",
-    metaTitle: "Work Permits & Employer-Sponsored Visas | Lexicon Migration",
+    metaTitle: "Work Permits & Employer-Sponsored Visas",
     metaDescription:
       "Support for overseas employment pathways, employer-sponsored visas, temporary work permits, and skilled worker options—with documentation assistance.",
     heroTitle: "Work permits & overseas employment",
@@ -211,7 +211,7 @@ export const services: ServiceDefinition[] = [
     slug: "study-visa",
     shortTitle: "Study Visa",
     navLabel: "Study Visa",
-    metaTitle: "Study Abroad & Student Visa Support | Lexicon Migration",
+    metaTitle: "Study Abroad & Student Visa Support",
     metaDescription:
       "Study abroad counselling, institution shortlisting, admission guidance, visa documentation, SOP support, and pre-departure preparation with Lexicon Migration.",
     heroTitle: "Study abroad & student visas",
@@ -271,7 +271,7 @@ export const services: ServiceDefinition[] = [
     slug: "travel",
     shortTitle: "Travel Services",
     navLabel: "Travel",
-    metaTitle: "Travel Services & Trip Planning | Lexicon Migration",
+    metaTitle: "Travel Services & Trip Planning",
     metaDescription:
       "Ticketing support, travel planning, hotel assistance, insurance guidance, holiday packages, and visa-related travel coordination from Lexicon Migration.",
     heroTitle: "Travel services & trip coordination",

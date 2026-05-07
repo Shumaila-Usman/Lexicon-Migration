@@ -3,27 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Menu, Phone, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  primaryNav,
-  serviceDropdownItems,
-  siteConfig,
-} from "@/lib/navigation";
+import { primaryNav, siteConfig } from "@/lib/navigation";
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setOpen(false);
-    setServicesOpen(false);
-    setMobileServicesOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -32,20 +23,6 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const openServicesMenu = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setServicesOpen(true);
-  };
-
-  const scheduleCloseServices = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setServicesOpen(false), 160);
-  };
-
-  const servicesActive =
-    pathname.startsWith("/services") ||
-    serviceDropdownItems.some((s) => s.href === pathname);
 
   return (
     <motion.header
@@ -75,75 +52,17 @@ export function Header() {
           </motion.span>
         </Link>
 
-        <nav
-          className="hidden items-center gap-1 lg:flex"
-          aria-label="Main"
-        >
-          {primaryNav.slice(0, 2).map((item) => (
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
+          {primaryNav.map((item) => (
             <NavPill key={item.href} item={item} pathname={pathname} />
           ))}
-
-          <div
-            className="relative"
-            onMouseEnter={openServicesMenu}
-            onMouseLeave={scheduleCloseServices}
+          <a
+            href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+            className="ml-2 hidden items-center gap-2 rounded-xl border border-brand-gold/35 bg-white/5 px-3 py-2 text-sm font-semibold text-white/95 backdrop-blur-sm transition hover:border-brand-gold/55 hover:bg-brand-gold/10 xl:inline-flex"
           >
-            <button
-              type="button"
-              aria-expanded={servicesOpen}
-              aria-haspopup="true"
-              onClick={() => setServicesOpen((v) => !v)}
-              className={`flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-semibold transition ${
-                servicesActive
-                  ? "bg-gradient-to-r from-brand-gold/25 to-brand-teal/30 text-brand-gold-light shadow-inner"
-                  : "text-white/90 hover:bg-white/10"
-              }`}
-            >
-              Services
-              <motion.span
-                animate={{ rotate: servicesOpen ? 180 : 0 }}
-                transition={{ duration: 0.25 }}
-              >
-                <ChevronDown className="h-4 w-4 opacity-90" aria-hidden />
-              </motion.span>
-            </button>
-
-            <AnimatePresence>
-              {servicesOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute left-0 top-full z-50 mt-2 min-w-[17.5rem] overflow-hidden rounded-xl border border-brand-gold/20 bg-black/75 py-2 shadow-2xl shadow-black/40 backdrop-blur-xl"
-                  role="menu"
-                >
-                  {serviceDropdownItems.map((item, i) => (
-                    <motion.div
-                      key={item.href}
-                      initial={{ opacity: 0, x: -6 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.04 }}
-                    >
-                      <Link
-                        href={item.href}
-                        role="menuitem"
-                        className={`block px-4 py-2.5 text-sm font-medium transition hover:bg-brand-gold/15 ${
-                          pathname === item.href
-                            ? "border-l-2 border-brand-gold bg-brand-gold/10 text-brand-gold-light"
-                            : "text-white/90 hover:text-brand-gold-light"
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          <NavPill item={primaryNav[2]} pathname={pathname} />
+            <Phone className="h-4 w-4 text-brand-gold-light" aria-hidden />
+            <span className="tabular-nums">{siteConfig.phone}</span>
+          </a>
         </nav>
 
         <motion.button
@@ -173,7 +92,7 @@ export function Header() {
               className="flex max-h-[75vh] flex-col gap-1 overflow-y-auto px-4 py-4 sm:px-6"
               aria-label="Mobile"
             >
-              {primaryNav.slice(0, 2).map((item, i) => (
+              {primaryNav.map((item, i) => (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, x: -12 }}
@@ -183,54 +102,28 @@ export function Header() {
                   <MobileLink item={item} pathname={pathname} />
                 </motion.div>
               ))}
-
-              <motion.div
+              <motion.a
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                className="rounded-xl border border-white/10 bg-white/5"
+                transition={{ delay: primaryNav.length * 0.05 }}
+                href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+                className="flex items-center gap-2 rounded-xl border border-brand-gold/30 bg-brand-gold/10 px-4 py-3 text-sm font-semibold text-white"
               >
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-semibold text-white"
-                  onClick={() => setMobileServicesOpen((v) => !v)}
-                  aria-expanded={mobileServicesOpen}
-                >
-                  Services
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-                {mobileServicesOpen && (
-                  <div className="border-t border-white/10">
-                    {serviceDropdownItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className={`block border-b border-white/5 px-6 py-2.5 text-sm text-white/85 last:border-b-0 hover:bg-brand-gold/10 ${
-                          pathname === item.href ? "text-brand-gold-light" : ""
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.14 }}
-              >
-                <MobileLink item={primaryNav[2]} pathname={pathname} />
-              </motion.div>
+                <Phone className="h-4 w-4 shrink-0 text-brand-gold-light" aria-hidden />
+                Call {siteConfig.phone}
+              </motion.a>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.header>
   );
+}
+
+function navItemActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  if (href === "/services") return pathname === "/services" || pathname.startsWith("/services/");
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 function NavPill({
@@ -240,8 +133,7 @@ function NavPill({
   item: { label: string; href: string };
   pathname: string;
 }) {
-  const active =
-    item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+  const active = navItemActive(pathname, item.href);
   return (
     <Link
       href={item.href}
@@ -263,8 +155,7 @@ function MobileLink({
   item: { label: string; href: string };
   pathname: string;
 }) {
-  const active =
-    item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+  const active = navItemActive(pathname, item.href);
   return (
     <Link
       href={item.href}

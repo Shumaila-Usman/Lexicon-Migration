@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Placeholder: travel services">
+  <defs>
+    <linearGradient id="tr" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#011f22"/>
+      <stop offset="60%" stop-color="#063d42"/>
+      <stop offset="100%" stop-color="#4a7c59"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#tr)"/>
+  <path fill="#ffffff" opacity="0.12" d="M1120 280 L1380 520 L1240 560 Z"/>
+  <path fill="#ffffff" opacity="0.1" d="M480 380 L820 380 L780 520 L440 520 Z"/>
+  <rect x="560" y="580" width="720" height="140" rx="16" fill="#ffffff" opacity="0.06"/>
+  <circle cx="900" cy="640" r="36" fill="#d4af37" opacity="0.35"/>
+  <text x="800" y="810" text-anchor="middle" fill="#e8f4f3" opacity="0.4" font-family="system-ui,sans-serif" font-size="26">Placeholder  Travel services</text>
+</svg>

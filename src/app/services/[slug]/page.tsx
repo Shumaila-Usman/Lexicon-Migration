@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ServicePageContent } from "@/components/ServicePageContent";
+import type { ServiceSlug } from "@/content/services";
 import { getServiceBySlug, services } from "@/content/services";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -12,7 +13,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
-  if (!service) return { title: "Service | Lexicon Migration" };
+  if (!service) return { title: "Service" };
   return {
     title: service.metaTitle,
     description: service.metaDescription,
@@ -27,5 +28,5 @@ export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
   if (!service) notFound();
-  return <ServicePageContent slug={slug} />;
+  return <ServicePageContent slug={slug as ServiceSlug} />;
 }

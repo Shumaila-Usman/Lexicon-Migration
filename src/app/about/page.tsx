@@ -6,6 +6,8 @@ import { WarmSection } from "@/components/layout/WarmSection";
 import { TealBandSection, glassOnTeal } from "@/components/layout/TealBandSection";
 import { TealPanel } from "@/components/TealPanel";
 import { Heart, Scale, Award, TrendingUp } from "lucide-react";
+import { PageImageSection } from "@/components/PageImageSection";
+import { siteConfig } from "@/lib/navigation";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -62,9 +64,24 @@ export default function AboutPage() {
         title="Independent guidance for global moves"
         subtitle="Lexicon Migration supports individuals, families, and employers with structured assessments, documentation assistance, and travel coordination—always with room for your story."
         align="left"
-        primaryCta={{ label: "Meet us on a call", href: "/contact" }}
+        primaryCta={{
+          label: "Meet us on a call",
+          href: "/contact#contact-form",
+        }}
         secondaryCta={{ label: "Our services", href: "/services" }}
       />
+
+      <WarmSection className="border-b border-amber-200/35 py-12 sm:py-14">
+        <FadeIn className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-[#1a1814] sm:text-2xl md:text-3xl">
+            Consultants committed to your timeline
+          </h2>
+          <p className="mt-2 text-sm text-[#4a453d] sm:text-base">
+            Calm communication, disciplined preparation, and a steady focus on evidence quality.
+          </p>
+        </FadeIn>
+        <PageImageSection preset="about" className="mt-8" />
+      </WarmSection>
 
       <WarmSection className="py-16 sm:py-20">
         <div className="mx-auto min-w-0 max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -200,13 +217,12 @@ export default function AboutPage() {
       <CTASection
         variant="promo"
         badge="CONTACT"
-        title="We would love to hear"
-        titleItalic="your plans"
-        description="Share your timeline and destination preferences. We will respond with next steps and what to bring to an initial consultation."
-        primaryLabel="Book now"
-        primaryHref="/contact"
-        secondaryLabel="Talk to us"
-        secondaryHref="/contact"
+        title="Ready to Start Your Journey?"
+        description="Speak with Lexicon Migration today for professional guidance on immigration, citizenship, work permits, study visas, visit visas and travel services."
+        primaryLabel="Call Now"
+        primaryHref={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+        secondaryHref={siteConfig.whatsapp}
+        tertiaryHref="/contact#contact-form"
       />
     </>
   );

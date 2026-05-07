@@ -13,10 +13,12 @@ import { ProcessSteps } from "@/components/ProcessSteps";
 import { Testimonials } from "@/components/Testimonials";
 import { CTASection } from "@/components/CTASection";
 import { FadeIn } from "@/components/FadeIn";
+import { PageImageSection } from "@/components/PageImageSection";
+import { WarmSection } from "@/components/layout/WarmSection";
 import { services } from "@/content/services";
+import { siteConfig } from "@/lib/navigation";
 
 export const metadata: Metadata = {
-  title: "Start Your Global Journey",
   description:
     "Start your global journey with Lexicon Migration—professional guidance for immigration, citizenship, work permits, study visas, visit visas, and travel solutions.",
 };
@@ -88,12 +90,12 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        imageSrc="/hero.png"
+        imageSrc="/images/placeholders/home-global.svg"
         eyebrow="Lexicon Migration"
         title="Start your global journey with clarity and confidence"
         subtitle="Professional guidance for immigration, citizenship, work permits, study visas, visit visas, and travel solutions—structured assessments, documentation support, and honest timelines."
         align="left"
-        primaryCta={{ label: "Book appointment", href: "/contact" }}
+        primaryCta={{ label: "Book appointment", href: "/contact#contact-form" }}
         secondaryCta={{ label: "Explore services", href: "/services" }}
       />
 
@@ -112,6 +114,19 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <WarmSection className="border-y border-brand-gold/10 py-12 sm:py-16">
+        <FadeIn className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold tracking-tight text-[#1a1814] sm:text-3xl">
+            Built for cross-border moves
+          </h2>
+          <p className="mt-3 text-[#4a453d]">
+            Consultation-led planning with clear documentation milestones—from first conversation
+            through lodgement.
+          </p>
+        </FadeIn>
+        <PageImageSection preset="services" className="mt-8" />
+      </WarmSection>
 
       <section className="relative overflow-hidden py-16 sm:py-20">
         <div className="absolute inset-0 bg-gradient-to-b from-white via-[#fffbf0] to-[#e8d5a8]/95" />
@@ -214,13 +229,13 @@ export default function HomePage() {
       <CTASection
         variant="promo"
         badge="FREE CONSULTATION"
-        title="Take the first step with a"
-        titleItalic="free consultation"
-        description="Tell us where you want to go and what you want to achieve. We will map practical next steps and documentation priorities—without obligation."
-        primaryLabel="Book now"
-        primaryHref="/contact"
-        secondaryLabel="Talk to us"
-        secondaryHref="/contact"
+        title="Ready to Start Your Journey?"
+        description="Speak with Lexicon Migration today for professional guidance on immigration, citizenship, work permits, study visas, visit visas and travel services."
+        primaryLabel="Call Now"
+        primaryHref={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+        secondaryHref={siteConfig.whatsapp}
+        tertiaryHref="/contact#contact-form"
+        showCompactLeadForm
       />
 
       <section className="relative border-t border-brand-gold/15 px-4 py-8 text-center sm:py-10">

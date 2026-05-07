@@ -9,10 +9,13 @@ import { TealBandSection, glassOnTeal } from "@/components/layout/TealBandSectio
 import { TealPanel } from "@/components/TealPanel";
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
+import type { ServiceSlug } from "@/content/services";
 import { getServiceBySlug } from "@/content/services";
 import { getServiceIcon } from "@/lib/serviceIcons";
+import { siteConfig } from "@/lib/navigation";
+import { PageImageSection } from "@/components/PageImageSection";
 
-export function ServicePageContent({ slug }: { slug: string }) {
+export function ServicePageContent({ slug }: { slug: ServiceSlug }) {
   const service = getServiceBySlug(slug);
   if (!service) return null;
   const Icon = getServiceIcon(service.iconKey);
@@ -23,9 +26,28 @@ export function ServicePageContent({ slug }: { slug: string }) {
         title={service.heroTitle}
         subtitle={service.summary}
         align="left"
-        primaryCta={{ label: "Speak to a Consultant", href: "/contact" }}
-        secondaryCta={null}
+        primaryCta={{
+          label: "Speak to a Consultant",
+          href: "/contact#contact-form",
+        }}
+        secondaryCta={{
+          label: "Chat on WhatsApp",
+          href: siteConfig.whatsapp,
+        }}
       />
+
+      <WarmSection className="border-b border-amber-200/40 py-10 sm:py-12">
+        <FadeIn className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#063d42]/85">
+            Visual overview
+          </p>
+          <h2 className="mt-2 text-xl font-bold text-[#1a1814] sm:text-2xl">
+            How we think about this service category
+          </h2>
+        </FadeIn>
+        {/* Swap preset imagery via PAGE_IMAGE_ASSETS in lib/pageImageSections.ts */}
+        <PageImageSection preset={slug} className="mt-6 sm:mt-8" />
+      </WarmSection>
 
       <WarmSection className="border-b border-amber-200/40 py-14 sm:py-16">
         <div className="mx-auto min-w-0 max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -120,13 +142,12 @@ export function ServicePageContent({ slug }: { slug: string }) {
       <CTASection
         variant="promo"
         badge="CONSULTATION"
-        title="Ready to discuss"
-        titleItalic="your case?"
-        description="Book a consultation for a structured eligibility conversation and next-step guidance—without pressure or unrealistic promises."
-        primaryLabel="Book now"
-        primaryHref="/contact"
-        secondaryLabel="All services"
-        secondaryHref="/services"
+        title="Ready to Start Your Journey?"
+        description="Speak with Lexicon Migration today for professional guidance on immigration, citizenship, work permits, study visas, visit visas and travel services."
+        primaryLabel="Call Now"
+        primaryHref={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+        secondaryHref={siteConfig.whatsapp}
+        tertiaryHref="/contact#contact-form"
       />
     </>
   );

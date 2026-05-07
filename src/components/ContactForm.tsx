@@ -3,36 +3,48 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-const services = [
+/** Dropdown values — keep aligned with service pages & CRM mapping later */
+const INTERESTED_SERVICES = [
   "Immigration & Citizenship",
-  "Work Permits",
+  "Work Permit",
   "Visit Visa",
   "Study Visa",
   "Travel Services",
-  "General inquiry",
-];
+  "Other",
+] as const;
 
-const destinations = [
+const PREFERRED_DESTINATIONS = [
   "Australia",
   "Canada",
-  "United Kingdom",
-  "United States",
+  "UK",
+  "USA",
   "Europe",
   "New Zealand",
-  "Other / undecided",
-];
+  "Other",
+] as const;
 
 const fieldClass =
   "mt-1.5 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-brand-gold/50 focus:ring-2 focus:ring-brand-gold/30";
 
 const labelClass = "block text-sm font-medium text-brand-gold-light/90";
 
-export function ContactForm() {
+const SUCCESS_COPY =
+  "Thank you! Your inquiry has been received. Our team will contact you shortly.";
+
+export type ContactFormProps = {
+  /** Compact variant for home CTA — fewer fields */
+  variant?: "full" | "compact";
+};
+
+export function ContactForm({ variant = "full" }: ContactFormProps) {
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // TODO: Connect to backend, Formspree, or CRM when client is ready
+    const form = e.currentTarget;
+    // TODO: Backend — POST to your API, Formspree, Resend, or CRM webhook here.
+    // Example: await fetch('/api/leads', { method: 'POST', body: new FormData(form) })
+    form.reset();
     setSubmitted(true);
   }
 
@@ -46,20 +58,92 @@ export function ContactForm() {
     >
       {submitted ? (
         <p className="rounded-xl border border-brand-gold/25 bg-black/30 px-4 py-6 text-center text-white/90">
-          Thank you for your message. This demo form does not send email yet—
-          {/* TODO: Remove demo notice after wiring submission */}
-          your team can connect this form to email or a CRM.
+          {SUCCESS_COPY}
         </p>
+      ) : variant === "compact" ? (
+        <>
+          <div>
+            <label htmlFor="lead-full-name" className={labelClass}>
+              Full Name
+            </label>
+            <input
+              id="lead-full-name"
+              name="fullName"
+              required
+              autoComplete="name"
+              className={fieldClass}
+              placeholder="Your full name"
+            />
+          </div>
+          <div>
+            <label htmlFor="lead-phone" className={labelClass}>
+              Phone Number
+            </label>
+            <input
+              id="lead-phone"
+              name="phone"
+              type="tel"
+              required
+              autoComplete="tel"
+              inputMode="tel"
+              className={fieldClass}
+              placeholder="e.g. 03001234567"
+            />
+          </div>
+          <div>
+            <label htmlFor="lead-email" className={labelClass}>
+              Email Address
+            </label>
+            <input
+              id="lead-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              className={fieldClass}
+              placeholder="you@example.com"
+            />
+          </div>
+          <div>
+            <label htmlFor="lead-service" className={labelClass}>
+              Interested Service
+            </label>
+            <select
+              id="lead-service"
+              name="interestedService"
+              className={`${fieldClass} cursor-pointer`}
+              defaultValue=""
+              required
+            >
+              <option value="" disabled className="bg-brand-navy">
+                Select a service
+              </option>
+              {INTERESTED_SERVICES.map((s) => (
+                <option key={s} value={s} className="bg-brand-navy">
+                  {s}
+                </option>
+              ))}
+            </select>
+          </div>
+          <motion.button
+            type="submit"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light py-3.5 text-base font-semibold text-brand-navy shadow-lg"
+          >
+            Submit Inquiry
+          </motion.button>
+        </>
       ) : (
         <>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <label htmlFor="name" className={labelClass}>
-                Name
+              <label htmlFor="full-name" className={labelClass}>
+                Full Name
               </label>
               <input
-                id="name"
-                name="name"
+                id="full-name"
+                name="fullName"
                 required
                 autoComplete="name"
                 className={fieldClass}
@@ -68,7 +152,7 @@ export function ContactForm() {
             </div>
             <div>
               <label htmlFor="email" className={labelClass}>
-                Email
+                Email Address
               </label>
               <input
                 id="email"
@@ -83,25 +167,27 @@ export function ContactForm() {
           </div>
           <div>
             <label htmlFor="phone" className={labelClass}>
-              Phone
+              Phone Number
             </label>
             <input
               id="phone"
               name="phone"
               type="tel"
+              required
               autoComplete="tel"
+              inputMode="tel"
               className={fieldClass}
-              placeholder="Include country code"
+              placeholder="e.g. 03009261437"
             />
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
               <label htmlFor="service" className={labelClass}>
-                Interested service
+                Interested Service
               </label>
               <select
                 id="service"
-                name="service"
+                name="interestedService"
                 className={`${fieldClass} cursor-pointer`}
                 defaultValue=""
                 required
@@ -109,7 +195,7 @@ export function ContactForm() {
                 <option value="" disabled className="bg-brand-navy">
                   Select a service
                 </option>
-                {services.map((s) => (
+                {INTERESTED_SERVICES.map((s) => (
                   <option key={s} value={s} className="bg-brand-navy">
                     {s}
                   </option>
@@ -118,18 +204,19 @@ export function ContactForm() {
             </div>
             <div>
               <label htmlFor="destination" className={labelClass}>
-                Preferred destination
+                Preferred Destination
               </label>
               <select
                 id="destination"
-                name="destination"
+                name="preferredDestination"
                 className={`${fieldClass} cursor-pointer`}
                 defaultValue=""
+                required
               >
-                <option value="" className="bg-brand-navy">
-                  Optional
+                <option value="" disabled className="bg-brand-navy">
+                  Select a destination
                 </option>
-                {destinations.map((d) => (
+                {PREFERRED_DESTINATIONS.map((d) => (
                   <option key={d} value={d} className="bg-brand-navy">
                     {d}
                   </option>
@@ -145,6 +232,8 @@ export function ContactForm() {
               id="message"
               name="message"
               rows={4}
+              required
+              minLength={10}
               className={fieldClass}
               placeholder="Tell us briefly about your goals and timeline."
             />
@@ -155,7 +244,7 @@ export function ContactForm() {
             whileTap={{ scale: 0.98 }}
             className="w-full rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light py-3.5 text-base font-semibold text-brand-navy shadow-lg sm:w-auto sm:px-10"
           >
-            Send message
+            Submit Inquiry
           </motion.button>
         </>
       )}

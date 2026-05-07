@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Placeholder: study visa">
+  <defs>
+    <linearGradient id="st" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#0a5f66"/>
+      <stop offset="100%" stop-color="#011f22"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#st)"/>
+  <path fill="#ffffff" opacity="0.08" d="M800 160 L1180 420 V760 H420 V420 Z"/>
+  <path fill="#d4af37" opacity="0.2" d="M620 520 L980 520 L920 720 H680 Z"/>
+  <rect x="660" y="340" width="280" height="56" rx="8" fill="#ffffff" opacity="0.15"/>
+  <circle cx="800" cy="620" r="48" fill="#ffffff" opacity="0.12"/>
+  <text x="800" y="840" text-anchor="middle" fill="#dceeea" opacity="0.4" font-family="system-ui,sans-serif" font-size="26">Placeholder  Study visa</text>
+</svg>
