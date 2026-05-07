@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:favicon": "node -e \"const fs=require('fs');const s='public/logo.png';if(!fs.existsSync(s)){console.error('Missing',s);process.exit(1);}fs.copyFileSync(s,'src/app/icon.png');fs.copyFileSync(s,'src/app/apple-icon.png');console.log('Copied logo to src/app/icon.png + apple-icon.png');\""
   },
   "dependencies": {
     "framer-motion": "^12.38.0",

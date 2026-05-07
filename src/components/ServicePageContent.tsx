@@ -14,14 +14,18 @@ import { getServiceBySlug } from "@/content/services";
 import { getServiceIcon } from "@/lib/serviceIcons";
 import { siteConfig } from "@/lib/navigation";
 import { PageImageSection } from "@/components/PageImageSection";
+import { getHeroBackground } from "@/lib/pageImageSections";
 
 export function ServicePageContent({ slug }: { slug: ServiceSlug }) {
   const service = getServiceBySlug(slug);
   if (!service) return null;
   const Icon = getServiceIcon(service.iconKey);
+  const heroBg = getHeroBackground(slug);
   return (
     <>
       <Hero
+        imageSrc={heroBg.imageSrc}
+        imageAlt={heroBg.imageAlt}
         eyebrow="Services"
         title={service.heroTitle}
         subtitle={service.summary}

@@ -1,11 +1,8 @@
 import type { ServiceSlug } from "@/content/services";
 
 /**
- * Stable placeholder images live under `public/images/placeholders/` (committed SVGs).
- *
- * For final photography: add optimized JPG/WebP under `public/images/pages/` using the
- * filenames below, then switch `placeholderSrc` to that path in this file (or pass a
- * prop override from the page later).
+ * Page & hero imagery under `public/images/pages/`.
+ * To swap a photo: replace the file on disk or change `src` here.
  */
 export type PageImagePreset =
   | "home"
@@ -18,64 +15,73 @@ export const PAGE_IMAGE_ASSETS: Record<
   PageImagePreset,
   {
     placeholderSrc: string;
-    /** Recommended path for the client’s final image file */
+    /** On-disk path (for editors / handoff) */
     recommendedClientPath: string;
     caption: string;
     alt: string;
   }
 > = {
   home: {
-    placeholderSrc: "/images/placeholders/home-global.svg",
+    placeholderSrc: "/images/pages/home-global-consultation.jpg",
     recommendedClientPath: "public/images/pages/home-global-consultation.jpg",
-    caption: "Global mobility & consultation — replace with your hero or campaign photo.",
-    alt: "Abstract global migration and professional consultation theme",
+    caption: "Global mobility and professional consultation.",
+    alt: "Professional immigration consultation and global mobility",
   },
   about: {
-    placeholderSrc: "/images/placeholders/about-office.svg",
+    placeholderSrc: "/images/pages/about-team-office.jpg",
     recommendedClientPath: "public/images/pages/about-team-office.jpg",
-    caption: "Team & office — replace with team photo or consultancy workspace.",
-    alt: "Office and professional team style placeholder",
+    caption: "Team and office — Lexicon Migration.",
+    alt: "Lexicon Migration team and office environment",
   },
   services: {
-    placeholderSrc: "/images/placeholders/services-docs.svg",
+    placeholderSrc: "/images/pages/services-visas-documents.jpg",
     recommendedClientPath: "public/images/pages/services-visas-documents.jpg",
-    caption: "Visas & documents — replace with consultation desk or document review scene.",
-    alt: "Visa consultation and documents placeholder",
+    caption: "Visa consultation and documentation support.",
+    alt: "Visa consultation, documents, and planning",
   },
   contact: {
-    placeholderSrc: "/images/placeholders/contact-support.svg",
+    placeholderSrc: "/images/pages/contact-office-location.jpg",
     recommendedClientPath: "public/images/pages/contact-office-location.jpg",
-    caption: "Office & support — replace with RJ Mall office exterior or reception.",
-    alt: "Customer support and office location placeholder",
+    caption: "Office location and client support.",
+    alt: "Lexicon Migration office and customer support",
   },
   "immigration-citizenship": {
-    placeholderSrc: "/images/placeholders/svc-immigration.svg",
+    placeholderSrc: "/images/pages/service-immigration-citizenship.jpg",
     recommendedClientPath: "public/images/pages/service-immigration-citizenship.jpg",
-    caption: "Immigration & citizenship — replace with passport/residency themed imagery.",
-    alt: "Immigration and citizenship themed placeholder",
+    caption: "Immigration and citizenship pathways.",
+    alt: "Immigration and citizenship services",
   },
   "work-permits": {
-    placeholderSrc: "/images/placeholders/svc-work.svg",
+    placeholderSrc: "/images/pages/service-work-permits.jpg",
     recommendedClientPath: "public/images/pages/service-work-permits.jpg",
-    caption: "Work permits — replace with professional workplace or employment imagery.",
-    alt: "Work permits and employment placeholder",
+    caption: "Work permits and employment mobility.",
+    alt: "Work permits and professional employment",
   },
   "visit-visa": {
-    placeholderSrc: "/images/placeholders/svc-visit.svg",
+    placeholderSrc: "/images/pages/service-visit-visa.jpg",
     recommendedClientPath: "public/images/pages/service-visit-visa.jpg",
-    caption: "Visit visa — replace with travel/tourism themed photography.",
-    alt: "Travel and visit visa placeholder",
+    caption: "Visit visas and travel.",
+    alt: "Visit visa and travel planning",
   },
   "study-visa": {
-    placeholderSrc: "/images/placeholders/svc-study.svg",
+    placeholderSrc: "/images/pages/service-study-visa.jpg",
     recommendedClientPath: "public/images/pages/service-study-visa.jpg",
-    caption: "Study visa — replace with students or campus imagery.",
-    alt: "Study abroad and student visa placeholder",
+    caption: "Study visas and education abroad.",
+    alt: "Study visa and international education",
   },
   travel: {
-    placeholderSrc: "/images/placeholders/svc-travel.svg",
+    placeholderSrc: "/images/pages/service-travel.jpg",
     recommendedClientPath: "public/images/pages/service-travel.jpg",
-    caption: "Travel services — replace with airline tickets or travel planning imagery.",
-    alt: "Travel planning and flights placeholder",
+    caption: "Travel services and trip coordination.",
+    alt: "Travel services and itinerary planning",
   },
 };
+
+/** Full-bleed hero background + alt text */
+export function getHeroBackground(preset: PageImagePreset): {
+  imageSrc: string;
+  imageAlt: string;
+} {
+  const a = PAGE_IMAGE_ASSETS[preset];
+  return { imageSrc: a.placeholderSrc, imageAlt: a.alt };
+}

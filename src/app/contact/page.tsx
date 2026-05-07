@@ -9,6 +9,9 @@ import { TealBandSection } from "@/components/layout/TealBandSection";
 import { TealPanel } from "@/components/TealPanel";
 import { PageImageSection } from "@/components/PageImageSection";
 import { siteConfig } from "@/lib/navigation";
+import { getHeroBackground } from "@/lib/pageImageSections";
+
+const contactHero = getHeroBackground("contact");
 
 const telHref = `tel:${siteConfig.phone.replace(/\s/g, "")}`;
 const mailHref = `mailto:${siteConfig.email}`;
@@ -24,6 +27,8 @@ export default function ContactPage() {
   return (
     <>
       <Hero
+        imageSrc={contactHero.imageSrc}
+        imageAlt={contactHero.imageAlt}
         eyebrow="Contact"
         title="Let us map your next steps"
         subtitle="Use the form, call, email, or WhatsApp. We will respond with available times and what to prepare for your first conversation."

@@ -26,9 +26,8 @@ export const metadata: Metadata = {
   },
   description:
     "Professional guidance for immigration, citizenship, work permits, study visas, visit visas, and travel solutions. Your future starts here.",
-  icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-  },
+  // Favicon: `src/app/icon.png` + `apple-icon.png` (copies of `public/logo.png`) — Next serves these automatically.
+  // Also see `next.config.ts` rewrite `/favicon.ico` → `/icon.png` for browsers that only request favicon.ico.
   openGraph: {
     title: "Lexicon Migration",
     description:

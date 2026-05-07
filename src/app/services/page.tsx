@@ -9,6 +9,9 @@ import { TealBandSection } from "@/components/layout/TealBandSection";
 import { PageImageSection } from "@/components/PageImageSection";
 import { services } from "@/content/services";
 import { siteConfig } from "@/lib/navigation";
+import { getHeroBackground } from "@/lib/pageImageSections";
+
+const servicesHero = getHeroBackground("services");
 
 export const metadata: Metadata = {
   title: "Services",
@@ -25,6 +28,8 @@ export default function ServicesPage() {
   return (
     <>
       <Hero
+        imageSrc={servicesHero.imageSrc}
+        imageAlt={servicesHero.imageAlt}
         eyebrow="What we offer"
         title="Services built around your journey"
         subtitle="From eligibility reviews to documentation assistance and travel coordination—clear communication and careful preparation at each stage."

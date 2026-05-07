@@ -8,6 +8,9 @@ import { TealPanel } from "@/components/TealPanel";
 import { Heart, Scale, Award, TrendingUp } from "lucide-react";
 import { PageImageSection } from "@/components/PageImageSection";
 import { siteConfig } from "@/lib/navigation";
+import { getHeroBackground } from "@/lib/pageImageSections";
+
+const aboutHero = getHeroBackground("about");
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -60,6 +63,8 @@ export default function AboutPage() {
   return (
     <>
       <Hero
+        imageSrc={aboutHero.imageSrc}
+        imageAlt={aboutHero.imageAlt}
         eyebrow="About us"
         title="Independent guidance for global moves"
         subtitle="Lexicon Migration supports individuals, families, and employers with structured assessments, documentation assistance, and travel coordination—always with room for your story."

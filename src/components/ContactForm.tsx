@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 /** Dropdown values — keep aligned with service pages & CRM mapping later */
@@ -37,7 +37,12 @@ export type ContactFormProps = {
 };
 
 export function ContactForm({ variant = "full" }: ContactFormProps) {
+  const [mounted, setMounted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -46,6 +51,35 @@ export function ContactForm({ variant = "full" }: ContactFormProps) {
     // Example: await fetch('/api/leads', { method: 'POST', body: new FormData(form) })
     form.reset();
     setSubmitted(true);
+  }
+
+  /* Avoid hydrating <input>/<select>/<button>: extensions often inject attrs (e.g. fdprocessedid) before hydration and trigger mismatches. */
+  if (!mounted) {
+    const h = variant === "compact" ? "min-h-[19rem]" : "min-h-[36rem]";
+    return (
+      <div
+        className={`glass-panel-strong min-w-0 space-y-4 p-5 sm:p-8 ${h}`}
+        aria-busy="true"
+        aria-label="Loading inquiry form"
+      >
+        <div className="h-3 w-28 animate-pulse rounded bg-white/15" />
+        <div className="h-11 w-full animate-pulse rounded-xl bg-white/10" />
+        <div className="h-3 w-24 animate-pulse rounded bg-white/15" />
+        <div className="h-11 w-full animate-pulse rounded-xl bg-white/10" />
+        <div className="h-3 w-20 animate-pulse rounded bg-white/15" />
+        <div className="h-11 w-full animate-pulse rounded-xl bg-white/10" />
+        {variant === "full" ? (
+          <>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="h-11 animate-pulse rounded-xl bg-white/10" />
+              <div className="h-11 animate-pulse rounded-xl bg-white/10" />
+            </div>
+            <div className="h-24 animate-pulse rounded-xl bg-white/10" />
+          </>
+        ) : null}
+        <div className="h-12 animate-pulse rounded-xl bg-brand-gold/20" />
+      </div>
+    );
   }
 
   return (

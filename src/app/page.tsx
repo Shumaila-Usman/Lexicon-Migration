@@ -17,6 +17,9 @@ import { PageImageSection } from "@/components/PageImageSection";
 import { WarmSection } from "@/components/layout/WarmSection";
 import { services } from "@/content/services";
 import { siteConfig } from "@/lib/navigation";
+import { getHeroBackground } from "@/lib/pageImageSections";
+
+const homeHero = getHeroBackground("home");
 
 export const metadata: Metadata = {
   description:
@@ -90,7 +93,8 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        imageSrc="/images/placeholders/home-global.svg"
+        imageSrc={homeHero.imageSrc}
+        imageAlt={homeHero.imageAlt}
         eyebrow="Lexicon Migration"
         title="Start your global journey with clarity and confidence"
         subtitle="Professional guidance for immigration, citizenship, work permits, study visas, visit visas, and travel solutions—structured assessments, documentation support, and honest timelines."
